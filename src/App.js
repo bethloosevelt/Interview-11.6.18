@@ -5,7 +5,7 @@ import { animalTranslations, foodTranslations } from './translations';
 import { CardContainer, CardHeader, CardContent } from './App.styled';
 
 // TYPE: PropsT = {food: string, translate: (string, string) => string}
-// TYPE: PropsT => ReactComponent
+// TYPE: PropsT => ReactElement
 const FoodCard = ({
   food,
   translate,
@@ -18,7 +18,7 @@ const FoodCard = ({
 );
 
 // TYPE: PropsT = {animal: string, translate: (string, string) => string}
-// TYPE: PropsT => ReactComponent
+// TYPE: PropsT => ReactElement
 const AnimalCard = ({
   animal,
   translate,
@@ -30,13 +30,16 @@ const AnimalCard = ({
   </CardContainer>
 );
 
+// Assume Translations is the union type of Animal and Food
+// translation JSON in translations.js
+// for the following two type annotations
 // TYPE: Translations => string => string => string => string
 const translateItem = R.curry(
   (translations, language, detail, item) =>
     translations[item][detail][language]
 );
 
-// TYPE: Translations => ReactComponent => string => propsObject => ReactComponent
+// TYPE: Translations => ReactComponent => string => ReactComponent
 const createTranslate = R.curry(
   (translations, Card, language, props) => (
     <Card
@@ -68,10 +71,10 @@ class App extends Component {
     const animals = ['tiger', 'lion', 'hippo', 'platypus'];
     const foods = ['cake', 'pizza', 'hotdog', 'pancake'];
 
-    // TYPE: [ReactComponent]
+    // TYPE: [ReactElement]
     const TranslatedAnimalCards = animals.map(a => <TranslatedAnimalCard animal={a} />);
 
-    // TYPE: [ReactComponent]
+    // TYPE: [ReactElement]
     const TranslatedFoodCards = foods.map(f => <TranslatedFoodCard food={f} />);
 
     // TYPE: Event => undefined
